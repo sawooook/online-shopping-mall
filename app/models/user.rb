@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :user_descriptions
 
+  # 유저가 생성될시 register로 유저상태 변경
   after_create do
     self.update(status: User.statuses[:register])
   end
