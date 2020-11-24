@@ -10,3 +10,16 @@ development:
   pool: 35
   timeout: 300000
   strict: false
+
+test:
+  adapter: mysql2
+  encoding: utf8mb4
+  database: shopping
+  username: root
+  password:
+  host: localhost
+  port: 3306
+  secure_auth: false
+  pool: 35
+  timeout: 300000
+  strict: false
