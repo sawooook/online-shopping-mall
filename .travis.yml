@@ -1,7 +1,3 @@
 language: ruby
 rvm:
   - 2.6.6
-notifications: # 성공 실패 여부 알림
-  email:
-    recipients:
-      - lna1003@naver.com
