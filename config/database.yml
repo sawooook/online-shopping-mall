@@ -14,5 +14,7 @@ development:
 test:
   adapter: mysql2
   database: myapp_test
-  username: travis
+  host: localhost
+  username: root
+  password:
   encoding: utf8
