@@ -1,5 +1,7 @@
 language: ruby
 rvm:
   - 2.6.6
-script:
-  - bundle exec rails server
+notifications: # 성공 실패 여부 알림
+  email:
+    recipients:
+      - lna1003@naver.com
