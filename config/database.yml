@@ -18,3 +18,4 @@ test:
   username: root
   password:
   encoding: utf8
+  socket: /tmp/mysql.sock 
