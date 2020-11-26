@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/sawooook/online-shopping-mall.svg?branch=main)](https://travis-ci.com/sawooook/online-shopping-mall)
+
 # README
 
 This README would normally document whatever steps are necessary to get the
