@@ -10,12 +10,19 @@ development:
   pool: 35
   timeout: 300000
   strict: false
+  socket: /tmp/mysql.sock
+
 
 test:
   adapter: mysql2
-  database: myapp_test
-  host: localhost
+  encoding: utf8mb4
+  database: shopping
   username: root
   password:
-  encoding: utf8
-  socket: /tmp/mysql.sock 
+  host: localhost
+  port: 3306
+  secure_auth: false
+  pool: 35
+  timeout: 300000
+  strict: false
+  socket: /tmp/mysql.sock
