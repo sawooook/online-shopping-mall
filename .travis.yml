@@ -3,12 +3,9 @@ services:
   - mysql
 rvm:
   - 2.6.6
+
 before_install:
   - mysql -e 'CREATE DATABASE myapp_test;'
-
-script:
-  — bundle exec rake db:create
-  — bundle exec rake db:migrate
 
 notifications:
   email:
