@@ -1,4 +1,4 @@
-class Api::UsersController < Api::ApplicationController
+class Web::UsersController < Web::ApplicationController
 
   def new
   end

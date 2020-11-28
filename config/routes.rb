@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     resources :users
     resources :users_description
   end
+
   namespace :web do
     resources :users
   end

@@ -1,0 +1,16 @@
+.paper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    background-color: #B00100;
+}
+
+.form {
+    width: 100%;
+}
+
+.submit {
+}
