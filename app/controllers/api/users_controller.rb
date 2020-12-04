@@ -16,6 +16,11 @@ class Api::UsersController < Api::ApplicationController
     end
   end
 
+  def sign_up_check
+    puts "=================="
+    puts params[:email]
+  end
+
   private
 
   def user_params

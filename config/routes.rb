@@ -8,6 +8,13 @@ Rails.application.routes.draw do
   end
 
   namespace :web do
-    resources :users
+    resources :users do
+      collection do
+        get 'login'
+      end
+      member do
+        post 'sign_up_check'
+      end
+    end
   end
 end

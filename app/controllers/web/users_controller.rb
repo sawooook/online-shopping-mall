@@ -1,10 +1,14 @@
 class Web::UsersController < Web::ApplicationController
 
   def new
+
   end
 
   def index
     render json: User.all.as_json
+  end
+
+  def login
   end
 
   def create
