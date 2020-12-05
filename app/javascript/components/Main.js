@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Button, Form, Container } from 'react-bootstrap';
 import NavBar from "./NavBar";
 import SearchBar from "./SearchBar";
+import CarouselPage from "./CarouselPage";
 
 const API = 'http://localhost:3000/api/users';
 
@@ -27,6 +28,7 @@ class Main extends React.Component {
             <div>
                 <NavBar></NavBar>
                 <SearchBar></SearchBar>
+                <CarouselPage></CarouselPage>
             </div>
         );
     }
