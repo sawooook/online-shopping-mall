@@ -19,13 +19,12 @@ class SignUp extends React.Component {
         };
     }
 
+    // 이메일과 유저닉네임이 바뀌는지 체크하는 함수 바뀐경우
     emailAndUserNameChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        })
         this.loadData(e.target)
     }
 
+    // 유저닉네임과 이메일이 존재하는지 rails에 요청하는 함수이다.
     loadData = (target) => {
         console.log(target)
         fetch("http://localhost:3000/api/users/sign_up_check", {
