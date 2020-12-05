@@ -29,6 +29,7 @@ class Main extends React.Component {
                 <NavBar></NavBar>
                 <SearchBar></SearchBar>
                 <CarouselPage></CarouselPage>
+                <h3 className="text-center mt-5">당신을 위한 추천상품 !</h3>
             </div>
         );
     }
