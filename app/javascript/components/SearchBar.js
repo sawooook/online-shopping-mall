@@ -15,8 +15,8 @@ class SearchBar extends React.Component {
                            aria-describedby="basic-addon1"/>
                 </div>
                 <div className="d-flex flex-row ml-auto my-auto">
-                    <h6 className="ml-2"> 로그인 </h6>
-                    <h6 className="ml-2"> 회원가입 </h6>
+                    <a href="/web/users/login"><h6 className="ml-2"> 로그인 </h6></a>
+                    <a href="/web/users/new"><h6 className="ml-2"> 회원가입 </h6></a>
                     <h6 className="ml-2"> 장바구니 </h6>
                     <h6 className="ml-2"> 마이페이지 </h6>
                 </div>

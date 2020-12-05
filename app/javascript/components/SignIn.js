@@ -3,26 +3,48 @@ import 'bootstrap/dist/css/bootstrap.css'
 import { Button, Form, Container } from 'react-bootstrap';
 
 
-const API = 'http://localhost:3000/api/users';
+const API = 'http://localhost:3000/api/users/login';
 
 class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            user: []
+            email: "",
+            password: ""
         };
     }
 
-    componentWillMount() {
-        this.loadData();
+    loginCheck = (e) => {
+        e.preventDefault()
+        this.loadLoginData(e)
     }
 
-    loadData() {
-        fetch(API)
-            .then(response => response.json())
-            .then(res => {
-                this.setState({user: res})
-            })
+    loadLoginData = (e) => {
+        console.log("123123123")
+        fetch(API, {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    email: e.target[0].value,
+                    password: e.target[1].value
+                })
+        })
+            .then(response => {
+                console.log(response)
+                console.log(response.status)
+                if(response.status === 200) {
+                    // 로그인 성공시
+                    window.location.href = "http://localhost:3000/web/mains"
+                }else{
+                    //로그인 실패시
+                    alert("로그인에 실패하였습니다")
+                }
+            }).catch(function(error) {
+            console.log("Request failed", error);
+        });
         // .then(data => this.setState({
         //     price_krw: "123",
         //     percent_change_1h: "456"
@@ -30,35 +52,25 @@ class SignUp extends React.Component {
     }
 
     render() {
-        const test = this.state.user.map((post)=>
-            <div className="state">
-                <h4>{post.created_at}</h4>
-                <h4>{post.email}</h4>
-
-            </div>
-        )
+        const { email, password } = this.state
 
         return (
-            <Form className="text-center">
-                <Form.Group controlId="formBasicEmail" className="mt-5 text-center">
-                    <Form.Label>이메일</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" className="col-4 mx-auto"/>
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword" className="text-center">
-                    <Form.Label>비밀번호</Form.Label>
-                    <Form.Control type="password" placeholder="Password" className="col-4 mx-auto"/>
-                </Form.Group>
-                <Button variant="primary" type="submit" className="col-4 mt-5 text-white">
-                    로그인하기
-                </Button>
-                <p></p>
-                <Button variant="secondary" type="submit" className="col-4 mt-2">
-                    <a href="/web/users/new" className="text-white">
-                        회원가입하기
-                    </a>
-                </Button>
-            </Form>
+            <div className="container">
+                <div className="col-12 text-center">
+                    <h3 className="mb-3 mt-5">Login</h3>
+                    <form onSubmit={this.loginCheck}>
+                        <div className="form-group col-4 mx-auto">
+                            <input type="text" className="form-control" placeholder="이메일 주소를 입력해주세요"/>
+                        </div>
+                        <div className="form-group col-4 mx-auto">
+                            <input type="password" className="form-control" placeholder="비밀번호를 입력해주세요"/>
+                        </div>
+                        <div className="form-group col-4 mx-auto">
+                            <input type="submit" className="btn-primary btn" value="Login"/>
+                        </div>
+                    </form>
+                </div>
+            </div>
         );
     }
 }

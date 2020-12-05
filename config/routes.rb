@@ -5,7 +5,8 @@ Rails.application.routes.draw do
   namespace :api do
     resources :users do
       collection do
-        post "sign_up_check"
+        post :sign_up_check
+        post :login
       end
     end
     resources :users_description
@@ -14,7 +15,7 @@ Rails.application.routes.draw do
   namespace :web do
     resources :users do
       collection do
-        get 'login'
+        get :login
       end
     end
     resources :mains
