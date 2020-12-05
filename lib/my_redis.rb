@@ -4,11 +4,11 @@ class MyRedis
   end
 
   def self.get(key)
-    redis_connect.get key
+    redis_connect.get "session:#{key}"
   end
 
   def self.delete(key)
-    redis_connect.del key
+    redis_connect.del "session:#{key}"
   end
 
   def self.redis_connect

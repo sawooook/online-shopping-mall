@@ -23,6 +23,7 @@ class Api::UsersController < Api::ApplicationController
       user_success_login = user.authenticate params[:password]
       if user_success_login.present?
         # 로그인 성공 했을 시
+        MyRedis.set("session:#{params[:email]}", Time.zone.now)
         render json: ResponseWrapper.wrap(nil), status: :ok
       else
         # 비밀번호가 일치하지 않았을 경우
@@ -32,6 +33,9 @@ class Api::UsersController < Api::ApplicationController
       # 존재하지 않는 이메일
       render json: ResponseWrapper.wrap(nil), status: :conflict
     end
+  end
+
+  def logout
   end
 
   # 회원가입 페이지에서 레일즈에게 이메일과 유저닉네임이 존재하는 체크할때 해당 메서드가 호출된다.
