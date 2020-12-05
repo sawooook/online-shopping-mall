@@ -13,6 +13,7 @@ class SignUp extends React.Component {
             nickNameResultText: "",
             emailResultText: "",
             username: "",
+            name: "",
             firstPassword: "",
             checkPassword: "",
             passwordResultText: ""
@@ -42,6 +43,7 @@ class SignUp extends React.Component {
                 console.log(response.status)
                 if(response.status === 200) {
                     this.setState({
+                        email: target.value,
                         emailResultText: "사용 가능한 이메일 주소입니다."
                     })
                 }else if (response.status === 409){
@@ -50,6 +52,7 @@ class SignUp extends React.Component {
                     })
                 }else if (response.status === 202){
                     this.setState({
+                        username: target.value,
                         nickNameResultText: "사용 가능한 닉네임 입니다."
                     })
                 }else if (response.status === 406){
@@ -89,6 +92,48 @@ class SignUp extends React.Component {
         }
     }
 
+    userNameChange = (e) => {
+        this.setState({
+            name: e.target.value,
+        })
+    }
+    onSubmitResgister = (e) =>{
+        const { firstPassword, email, username, name} = this.state
+        e.preventDefault()
+        this.loadDateForRegister(firstPassword, email, username, name)
+
+    }
+
+    loadDateForRegister = (firstPassword, email, username, name) => {
+        fetch("http://localhost:3000/api/users", {
+            method: "POST",
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(
+                {
+                    password: firstPassword,
+                    email: email,
+                    nickname: username,
+                    name: name
+                })
+        })
+            .then(response => {
+                console.log(response)
+                console.log(response.status)
+                if(response.status === 200) {
+                    // 회원가입 성공시
+                    window.location.href = "http://localhost:3000/web/mains"
+                }else{
+                    //회원가입 실패시
+                    alert("회원가입에 실패하였습니다")
+                }
+            }).catch(function(error) {
+            console.log("Request failed", error);
+        });
+
+    }
+
 
     render() {
         const { nickNameResultText, emailResultText, passwordResultText } = this.state
@@ -100,25 +145,29 @@ class SignUp extends React.Component {
                 </div>
                 <div className="row mt-5">
                     <div className="col-12">
-                        <form method="POST" action=".">
+                        <form onSubmit={this.onSubmitResgister}>
                             <div className="form-group">
                                 <label htmlFor="username">이메일 주소</label>
-                                <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" onChange={this.emailAndUserNameChange}/>
+                                <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" onChange={this.emailAndUserNameChange} required/>
                                 <small className="text-black mt-3">{emailResultText}</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="username">닉네임</label>
-                                <input type="text" className="form-control" id="username" placeholder="닉네임을 입력해주세요" onChange={this.emailAndUserNameChange} name="username"/>
+                                <input type="text" className="form-control" id="username" placeholder="닉네임을 입력해주세요" onChange={this.emailAndUserNameChange} name="username" required/>
                                 <small className="text-black mt-3">{nickNameResultText}</small>
                             </div>
                             <div className="form-group">
+                                <label htmlFor="name">이름</label>
+                                <input type="text" className="form-control" id="name" placeholder="이름을 입력해주세요" name="name" onChange={this.userNameChange} name="name" required/>
+                            </div>
+                            <div className="form-group">
                                 <label htmlFor="username">비밀번호</label>
-                                <input type="password" className="form-control" id="firstPassword" placeholder="비밀번호를 입력해주세요"
+                                <input type="password" className="form-control" id="firstPassword" placeholder="비밀번호를 입력해주세요" required
                                        name="firstPassword" onChange={this.firstPasswordChange}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="username">비밀번호 확인</label>
-                                <input type="password" className="form-control" id="checkPassword" placeholder="비밀번호를 한번더 입력해주세요"
+                                <input type="password" className="form-control" id="checkPassword" placeholder="비밀번호를 한번더 입력해주세요" required
                                        name="checkPassword" onChange={this.checkPasswordChange}/>
                                 <small className="text-black mt-3">{passwordResultText}</small>
                             </div>

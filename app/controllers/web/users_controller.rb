@@ -1,4 +1,5 @@
 class Web::UsersController < Web::ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def new
 
@@ -14,7 +15,7 @@ class Web::UsersController < Web::ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      render json: ResponseWrapper.wrap(user.as_json(only: [:id, :email, :nickname])), status: :ok
+      redirect_to web_mains_path
     else
       render json: ResponseWrapper.wrap(nil, user.errors.details), status: :bad_request
     end
