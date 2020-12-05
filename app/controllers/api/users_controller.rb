@@ -1,4 +1,6 @@
 class Api::UsersController < Api::ApplicationController
+  skip_before_action :verify_authenticity_token
+
 
   def new
   end
@@ -17,8 +19,24 @@ class Api::UsersController < Api::ApplicationController
   end
 
   def sign_up_check
-    puts "=================="
-    puts params[:email]
+
+    if params[:email].present?
+      if User.find_by_email params[:email]
+        # 동일한 이메일이 존재할 경우
+        render json: ResponseWrapper.wrap(nil), status: :conflict
+      else
+        # 이메일이 존재하지 않을 경우
+        render json: ResponseWrapper.wrap(nil), status: :ok
+      end
+    else
+      if User.find_by_nickname params[:username]
+        # 동일한 이메일이 존재할 경우
+        render json: ResponseWrapper.wrap(nil), status: :not_acceptable
+      else
+        # 이메일이 존재하지 않을 경우
+        render json: ResponseWrapper.wrap(nil), status: :accepted
+      end
+    end
   end
 
   private

@@ -10,48 +10,69 @@ class SignUp extends React.Component {
         super(props);
         this.state = {
             email: "",
-            name: "",
+            nickNameResultText: "",
+            emailResultText: "",
+            username: "",
             firstPassword: "",
             checkPassword: "",
             passwordResultText: ""
         };
     }
 
-    checkEmail= (e) => {
-        const { email } = this.state
-        this.loadData(e.target.value)
+    emailAndUserNameChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+        this.loadData(e.target)
     }
 
-    loadData = (value) => {
-        fetch("http://localhost:3000/web/users/sign_up_check", {
+    loadData = (target) => {
+        console.log(target)
+        fetch("http://localhost:3000/api/users/sign_up_check", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify({email: value})
+            body: JSON.stringify(
+                {
+                    [target.name]: target.value
+                })
         })
-            .then(response => response.json())
-            .then(res => {
-                this.setState({user: res})
-            })
-        // .then(data => this.setState({
-        //     price_krw: "123",
-        //     percent_change_1h: "456"
-        // }));
+            .then(response => {
+                console.log(response)
+                console.log(response.status)
+                if(response.status === 200) {
+                    this.setState({
+                        emailResultText: "사용 가능한 이메일 주소입니다."
+                    })
+                }else if (response.status === 409){
+                    this.setState({
+                        emailResultText: "사용 불가능한 이메일 주소 입니다."
+                    })
+                }else if (response.status === 202){
+                    this.setState({
+                        nickNameResultText: "사용 가능한 닉네임 입니다."
+                    })
+                }else if (response.status === 406){
+                    this.setState({
+                        nickNameResultText: "사용 불가능한 닉네임 입니다."
+                    })
+                }
+            }).catch(function(error) {
+            console.log("Request failed", error);
+        });
     }
 
     firstPasswordChange = (e) =>{
         this.setState({
             firstPassword: e.target.value
         })
-        console.log(this.state.firstPassword)
     }
 
     checkPasswordChange= (e) =>{
         this.setState({
             checkPassword: e.target.value
         })
-        console.log(this.state.checkPassword)
         this.doesPasswordMatch()
     }
 
@@ -71,7 +92,7 @@ class SignUp extends React.Component {
 
 
     render() {
-        const { name, firstPassword, checkPassword, email, passwordResultText } = this.state
+        const { nickNameResultText, emailResultText, passwordResultText } = this.state
 
         return (
             <div className="container">
@@ -83,13 +104,13 @@ class SignUp extends React.Component {
                         <form method="POST" action=".">
                             <div className="form-group">
                                 <label htmlFor="username">이메일 주소</label>
-                                <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" onChange={this.handleChange} value={email}/>
-                                <small className="text-black mt-3">아이디가 중복입니다</small>
+                                <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" onChange={this.emailAndUserNameChange}/>
+                                <small className="text-black mt-3">{emailResultText}</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="username">닉네임</label>
-                                <input type="text" className="form-control" id="username" placeholder="닉네임을 입력해주세요"
-                                       name="username"/>
+                                <input type="text" className="form-control" id="username" placeholder="닉네임을 입력해주세요" onChange={this.emailAndUserNameChange} name="username"/>
+                                <small className="text-black mt-3">{nickNameResultText}</small>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="username">비밀번호</label>
