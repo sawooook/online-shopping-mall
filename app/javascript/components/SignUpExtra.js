@@ -141,37 +141,41 @@ class SignUpExtra extends React.Component {
         return (
             <div className="container">
                 <div className="row mt-5">
-                    <h1>회원가입</h1>
+                    <h1>추가 정보 입력</h1>
                 </div>
                 <div className="row mt-5">
                     <div className="col-12">
                         <form onSubmit={this.onSubmitResgister}>
                             <div className="form-group">
-                                <label htmlFor="username">이메일 주소</label>
+                                <label htmlFor="username">주소</label>
                                 <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" onChange={this.emailAndUserNameChange} required/>
                                 <small className="text-black mt-3">{emailResultText}</small>
                             </div>
+
+                            <hr></hr>
                             <div className="form-group">
-                                <label htmlFor="username">닉네임</label>
-                                <input type="text" className="form-control" id="username" placeholder="닉네임을 입력해주세요" onChange={this.emailAndUserNameChange} name="username" required/>
-                                <small className="text-black mt-3">{nickNameResultText}</small>
+                                <label htmlFor="name">성별</label>
+                                <br></br>
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="radio" name="radio-boy"
+                                           id="radio-boy" value="boy"/>
+                                        <label className="form-check-label" htmlFor="radio-boy">남</label>
+                                </div>
+
+                                <div className="form-check form-check-inline">
+                                    <input className="form-check-input" type="radio" name="radio-girl"
+                                           id="radio-girl" value="girl"/>
+                                        <label className="form-check-label" htmlFor="radio-girl">여</label>
+                                </div>
+
                             </div>
+                            <hr></hr>
                             <div className="form-group">
-                                <label htmlFor="name">이름</label>
-                                <input type="text" className="form-control" id="name" placeholder="이름을 입력해주세요" name="name" onChange={this.userNameChange} name="name" required/>
+                                <label htmlFor="phone">휴대폰 번호</label>
+                                <input type="text" className="form-control" id="phone" placeholder="( '-' 를 빼고 입력해주세요. )" name="phone" onChange={this.userNameChange} required/>
                             </div>
-                            <div className="form-group">
-                                <label htmlFor="username">비밀번호</label>
-                                <input type="password" className="form-control" id="firstPassword" placeholder="비밀번호를 입력해주세요" required
-                                       name="firstPassword" onChange={this.firstPasswordChange}/>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="username">비밀번호 확인</label>
-                                <input type="password" className="form-control" id="checkPassword" placeholder="비밀번호를 한번더 입력해주세요" required
-                                       name="checkPassword" onChange={this.checkPasswordChange}/>
-                                <small className="text-black mt-3">{passwordResultText}</small>
-                            </div>
-                            <button type="submit" className="btn btn-primary">다음</button>
+                            <hr></hr>
+                            <button type="submit" className="btn btn-primary">완료</button>
                         </form>
                     </div>
                 </div>
