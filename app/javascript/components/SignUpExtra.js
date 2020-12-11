@@ -9,7 +9,8 @@ class SignUpExtra extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            address: ""
+            address: "",
+            gender: ""
         };
     }
 
@@ -28,6 +29,11 @@ class SignUpExtra extends React.Component {
         })
     }
 
+    clickGenderRadioButton = (e) => {
+        this.setState({
+            gender: e.target.value
+        })
+    }
 
 
     // 유저닉네임과 이메일이 존재하는지 rails에 요청하는 함수이다.
@@ -102,14 +108,17 @@ class SignUpExtra extends React.Component {
             name: e.target.value,
         })
     }
-    onSubmitResgister = (e) =>{
-        const { firstPassword, email, username, name} = this.state
-        e.preventDefault()
-        this.loadDateForRegister(firstPassword, email, username, name)
 
+    onSubmitExtraResgister = (e) =>{
+        const { firstPassword, gender, username, name} = this.state
+        e.preventDefault()
+        console.log(gender)
+        console.log(e.target[0].value) // 주소
+        console.log(e.target[3].value) // 휴대폰 번호
+        this.loadDateForRegister(gender, e.target[0].value, e.target[3].value)
     }
 
-    loadDateForRegister = (firstPassword, email, username, name) => {
+    loadDateForRegister = (gender, address, phone) => {
         fetch("http://localhost:3000/api/users", {
             method: "POST",
             headers: {
@@ -136,9 +145,7 @@ class SignUpExtra extends React.Component {
             }).catch(function(error) {
             console.log("Request failed", error);
         });
-
     }
-
 
     render() {
         const { address, emailResultText, passwordResultText } = this.state
@@ -150,28 +157,26 @@ class SignUpExtra extends React.Component {
                 </div>
                 <div className="row mt-5">
                     <div className="col-12">
-                        <form onSubmit={this.onSubmitResgister}>
+                        <form onSubmit={this.onSubmitExtraResgister}>
                             <div className="form-group">
                                 <label htmlFor="username">주소</label>
                                 <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" value={address} onClick={this.clickAddressInputBar} required/>
                             </div>
 
                             <hr></hr>
-                            <div className="form-group">
+                            <div className="form-group" onChange={this.clickGenderRadioButton}>
                                 <label htmlFor="name">성별</label>
                                 <br></br>
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="radio" name="radio-boy"
-                                           id="radio-boy" value="boy"/>
-                                        <label className="form-check-label" htmlFor="radio-boy">남</label>
+                                    <input className="form-check-input" type="radio" name="GenderRadioOptions"
+                                           id="boy" value="boy"/>
+                                        <label className="form-check-label" htmlFor="boy">남</label>
                                 </div>
-
                                 <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="radio" name="radio-girl"
-                                           id="radio-girl" value="girl"/>
-                                        <label className="form-check-label" htmlFor="radio-girl">여</label>
+                                    <input className="form-check-input" type="radio" name="GenderRadioOptions"
+                                           id="girl" value="girl"/>
+                                        <label className="form-check-label" htmlFor="girl">여</label>
                                 </div>
-
                             </div>
                             <hr></hr>
                             <div className="form-group">
