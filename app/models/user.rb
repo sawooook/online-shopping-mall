@@ -17,5 +17,4 @@ class User < ApplicationRecord
       # 회원탈퇴시 유저 상태
       unregister: 30
   }
-
 end

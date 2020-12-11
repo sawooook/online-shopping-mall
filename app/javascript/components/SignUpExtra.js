@@ -5,7 +5,7 @@ import { Button, Form, Container } from 'react-bootstrap';
 
 const API = 'http://localhost:3000/api/users';
 
-class SignUp extends React.Component {
+class SignUpExtra extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -179,4 +179,4 @@ class SignUp extends React.Component {
         );
     }
 }
-export default SignUp
+export default SignUpExtra

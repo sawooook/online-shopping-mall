@@ -18,6 +18,10 @@ Rails.application.routes.draw do
         get :login
       end
     end
+    resources :users_description do
+
+    end
     resources :mains
   end
+  root :to => "web/mains#index"
 end
