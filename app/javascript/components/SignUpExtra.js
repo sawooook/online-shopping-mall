@@ -9,21 +9,26 @@ class SignUpExtra extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            email: "",
-            nickNameResultText: "",
-            emailResultText: "",
-            username: "",
-            name: "",
-            firstPassword: "",
-            checkPassword: "",
-            passwordResultText: ""
+            address: ""
         };
     }
 
-    // 이메일과 유저닉네임이 바뀌는지 체크하는 함수 바뀐경우
-    emailAndUserNameChange = (e) => {
-        this.loadData(e.target)
+
+    clickAddressInputBar = (e) => {
+        var controller = this
+
+        daum.postcode.load(function(){
+            new daum.Postcode({
+                oncomplete: function(data) {
+                    controller.setState({
+                        address: data.jibunAddress
+                    })
+                }
+            }).open();
+        })
     }
+
+
 
     // 유저닉네임과 이메일이 존재하는지 rails에 요청하는 함수이다.
     loadData = (target) => {
@@ -136,7 +141,7 @@ class SignUpExtra extends React.Component {
 
 
     render() {
-        const { nickNameResultText, emailResultText, passwordResultText } = this.state
+        const { address, emailResultText, passwordResultText } = this.state
 
         return (
             <div className="container">
@@ -148,8 +153,7 @@ class SignUpExtra extends React.Component {
                         <form onSubmit={this.onSubmitResgister}>
                             <div className="form-group">
                                 <label htmlFor="username">주소</label>
-                                <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" onChange={this.emailAndUserNameChange} required/>
-                                <small className="text-black mt-3">{emailResultText}</small>
+                                <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" value={address} onClick={this.clickAddressInputBar} required/>
                             </div>
 
                             <hr></hr>
