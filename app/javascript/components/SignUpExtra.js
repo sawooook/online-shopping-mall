@@ -35,82 +35,8 @@ class SignUpExtra extends React.Component {
         })
     }
 
-
-    // 유저닉네임과 이메일이 존재하는지 rails에 요청하는 함수이다.
-    loadData = (target) => {
-        console.log(target)
-        fetch("http://localhost:3000/api/users/sign_up_check", {
-            method: "POST",
-            headers: {
-                "Content-Type" : "application/json"
-            },
-            body: JSON.stringify(
-                {
-                    [target.name]: target.value
-                })
-        })
-            .then(response => {
-                console.log(response)
-                console.log(response.status)
-                if(response.status === 200) {
-                    this.setState({
-                        email: target.value,
-                        emailResultText: "사용 가능한 이메일 주소입니다."
-                    })
-                }else if (response.status === 409){
-                    this.setState({
-                        emailResultText: "사용 불가능한 이메일 주소 입니다."
-                    })
-                }else if (response.status === 202){
-                    this.setState({
-                        username: target.value,
-                        nickNameResultText: "사용 가능한 닉네임 입니다."
-                    })
-                }else if (response.status === 406){
-                    this.setState({
-                        nickNameResultText: "사용 불가능한 닉네임 입니다."
-                    })
-                }
-            }).catch(function(error) {
-            console.log("Request failed", error);
-        });
-    }
-
-    firstPasswordChange = (e) =>{
-        this.setState({
-            firstPassword: e.target.value
-        })
-    }
-
-    checkPasswordChange= (e) =>{
-        this.setState({
-            checkPassword: e.target.value
-        })
-        this.doesPasswordMatch()
-    }
-
-    doesPasswordMatch = (e) => {
-        const { firstPassword, checkPassword} = this.state
-
-        if(firstPassword === checkPassword) {
-            this.setState({
-                passwordResultText: "패스워드가 일치 합니다",
-            })
-        }else{
-            this.setState({
-                passwordResultText: "패스워드가 불일치 합니다",
-            })
-        }
-    }
-
-    userNameChange = (e) => {
-        this.setState({
-            name: e.target.value,
-        })
-    }
-
-    onSubmitExtraResgister = (e) =>{
-        const { firstPassword, gender, username, name} = this.state
+    onSubmitExtraRegister = (e) =>{
+        const { gender } = this.state
         e.preventDefault()
         console.log(gender)
         console.log(e.target[0].value) // 주소
@@ -119,26 +45,25 @@ class SignUpExtra extends React.Component {
     }
 
     loadDateForRegister = (gender, address, phone) => {
-        fetch("http://localhost:3000/api/users", {
+        fetch("http://localhost:3000/api/users_description", {
             method: "POST",
             headers: {
                 "Content-Type" : "application/json"
             },
             body: JSON.stringify(
                 {
-                    password: firstPassword,
-                    email: email,
-                    nickname: username,
-                    name: name
+                    gender: gender,
+                    address: address,
+                    phone: phone
                 })
         })
             .then(response => {
                 console.log(response)
                 console.log(response.status)
                 if(response.status === 200) {
-                    // 회원가입 성공시
-                    window.location.href = "http://localhost:3000/web/users_description/new("
-                }else{
+                    // 회원 추가 정보 입력 성공시
+                    window.location.href = "http://localhost:3000"
+                } else {
                     //회원가입 실패시
                     alert("회원가입에 실패하였습니다")
                 }
@@ -148,7 +73,7 @@ class SignUpExtra extends React.Component {
     }
 
     render() {
-        const { address, emailResultText, passwordResultText } = this.state
+        const { address } = this.state
 
         return (
             <div className="container">
@@ -157,7 +82,7 @@ class SignUpExtra extends React.Component {
                 </div>
                 <div className="row mt-5">
                     <div className="col-12">
-                        <form onSubmit={this.onSubmitExtraResgister}>
+                        <form onSubmit={this.onSubmitExtraRegister}>
                             <div className="form-group">
                                 <label htmlFor="username">주소</label>
                                 <input type="text" className="form-control" id="email" placeholder="이메일 주소를 입력해주세요" name="email" value={address} onClick={this.clickAddressInputBar} required/>

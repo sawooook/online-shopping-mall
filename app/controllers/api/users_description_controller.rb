@@ -17,7 +17,8 @@ class Api::UsersDescriptionController < Api::ApplicationController
   end
 
   private
+
   def user_description_params
-    params.permit(:nickname, :address, :phone)
+    params.permit(:address, :gender, :phone)
   end
 end

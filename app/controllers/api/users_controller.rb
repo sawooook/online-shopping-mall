@@ -23,8 +23,9 @@ class Api::UsersController < Api::ApplicationController
       user_success_login = user.authenticate params[:password]
       if user_success_login.present?
         # 로그인 성공 했을 시
+        token = JsonWebToken.encode(user.id)
         #MyRedis.set("session:#{params[:email]}", Time.zone.now)
-        render json: ResponseWrapper.wrap(nil), status: :ok
+        render json: ResponseWrapper.wrap(user.as_json.merge(token)), status: :ok
       else
         # 비밀번호가 일치하지 않았을 경우
         render json: ResponseWrapper.wrap(nil), status: :not_found

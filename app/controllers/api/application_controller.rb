@@ -1,14 +1,13 @@
 class Api::ApplicationController < ApplicationController
   skip_before_action :verify_authenticity_token
+  before_action :http_token
 
   def authenticate_user
-
     if http_token.present?
       # http_token이 존재하면 decode를 함
       decode_token = JsonWebToken.decode(http_token)
       if decode_token.present?
-        # 로그인 상태이다.
-        render json: {}, status: :ok
+        @token = decode_token
       end
       return
     else
@@ -30,7 +29,10 @@ class Api::ApplicationController < ApplicationController
   # 예를 들어 token값이 있는지 없는지 없을 경우 에는 로그인이 안된 상태로 체크하자
 
   def http_token
-    http_token ||= request.headers['Authorization'].split(' ').last
-    http_token
+    if request.headers['Authorization'].present?
+      request.headers['Authorization'].split(' ').last
+    else
+      nil
+    end
   end
 end
