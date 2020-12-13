@@ -23,7 +23,7 @@ class Api::UsersController < Api::ApplicationController
       user_success_login = user.authenticate params[:password]
       if user_success_login.present?
         # 로그인 성공 했을 시
-        MyRedis.set("session:#{params[:email]}", Time.zone.now)
+        #MyRedis.set("session:#{params[:email]}", Time.zone.now)
         render json: ResponseWrapper.wrap(nil), status: :ok
       else
         # 비밀번호가 일치하지 않았을 경우
