@@ -16,7 +16,7 @@ class NavBar extends React.Component {
                             <a className="nav-link" href="#">랭킹</a>
                         </li>
                         <li className="nav-item">
-                            <a className="nav-link" href="#">카테고리</a>
+                            <a className="nav-link" href="/web/products">카테고리</a>
                         </li>
                     </ul>
                 </div>

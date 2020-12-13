@@ -22,6 +22,7 @@ Rails.application.routes.draw do
 
     end
     resources :mains
+    resources :products
   end
   root :to => "web/mains#index"
 end
