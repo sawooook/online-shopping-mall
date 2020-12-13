@@ -10,7 +10,27 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_22_122715) do
+ActiveRecord::Schema.define(version: 2020_12_13_114737) do
+
+  create_table "product_options", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "color"
+    t.string "size"
+    t.integer "status"
+    t.integer "price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "product_id", null: false
+    t.index ["product_id"], name: "index_product_options_on_product_id"
+  end
+
+  create_table "products", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_products_on_user_id"
+  end
 
   create_table "user_descriptions", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "address"
@@ -33,5 +53,7 @@ ActiveRecord::Schema.define(version: 2020_11_22_122715) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "product_options", "products"
+  add_foreign_key "products", "users"
   add_foreign_key "user_descriptions", "users"
 end

@@ -10,7 +10,6 @@ class SearchBar extends React.Component {
     }
 
     tokenCheck(param) {
-        console.log(param)
         if(param === "login"){
             return(
                 <a href="/web/users/login"><h6 className="ml-2"> 로그인 </h6></a>
