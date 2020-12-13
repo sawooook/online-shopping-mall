@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :user_descriptions
+  has_many :products
   has_secure_password
 
   # 유저가 생성될시 register로 유저상태 변경
