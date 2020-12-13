@@ -36,9 +36,6 @@ class Api::UsersController < Api::ApplicationController
     end
   end
 
-  def logout
-  end
-
   # 회원가입 페이지에서 레일즈에게 이메일과 유저닉네임이 존재하는 체크할때 해당 메서드가 호출된다.
   def sign_up_check
     # 파라미터는 email과 username 두가지가 react로 부터 오며 email과 username으로 응답값이 분기된다.
