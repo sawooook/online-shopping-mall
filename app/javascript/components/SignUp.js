@@ -2,7 +2,6 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import { Button, Form, Container } from 'react-bootstrap';
 
-
 const API = 'http://localhost:3000/api/users';
 
 class SignUp extends React.Component {
@@ -22,12 +21,17 @@ class SignUp extends React.Component {
 
     // 이메일과 유저닉네임이 바뀌는지 체크하는 함수 바뀐경우
     emailAndUserNameChange = (e) => {
+        console.log("------------------")
+        console.log(e.target)
         this.loadData(e.target)
     }
 
     // 유저닉네임과 이메일이 존재하는지 rails에 요청하는 함수이다.
     loadData = (target) => {
-        console.log(target)
+        const  { Cookies } = this.props
+
+        console.log("======================")
+        console.log(target.name)
         fetch("http://localhost:3000/api/users/sign_up_check", {
             method: "POST",
             headers: {
@@ -39,8 +43,8 @@ class SignUp extends React.Component {
                 })
         })
             .then(response => {
-                console.log(response)
-                console.log(response.status)
+                console.log(Cookies.save('name',"name", {path: "/"}))
+                console.log(Cookies.load('name'))
                 if(response.status === 200) {
                     this.setState({
                         email: target.value,
@@ -97,14 +101,16 @@ class SignUp extends React.Component {
             name: e.target.value,
         })
     }
+
     onSubmitResgister = (e) =>{
         const { firstPassword, email, username, name} = this.state
         e.preventDefault()
         this.loadDateForRegister(firstPassword, email, username, name)
-
     }
 
     loadDateForRegister = (firstPassword, email, username, name) => {
+        //const [cookies, setCookie, removeCookie] = useCookies(['user-id']);
+
         fetch("http://localhost:3000/api/users", {
             method: "POST",
             headers: {
@@ -119,11 +125,11 @@ class SignUp extends React.Component {
                 })
         })
             .then(response => {
-                console.log(response)
-                console.log(response.status)
                 if(response.status === 200) {
-                    // 회원가입 성공시
-                    window.location.href = "http://localhost:3000/web/users_description/new("
+                    response.json().then(data => {
+                        localStorage.setItem("token", data.data.token)
+                        window.location.href = "http://localhost:3000/web/users_description/new"
+                    })
                 }else{
                     //회원가입 실패시
                     alert("회원가입에 실패하였습니다")

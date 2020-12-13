@@ -1,5 +1,4 @@
 class Api::UsersController < Api::ApplicationController
-  skip_before_action :verify_authenticity_token
 
   def new
   end
@@ -11,7 +10,8 @@ class Api::UsersController < Api::ApplicationController
   def create
     user = User.new(user_params)
     if user.save
-      render json: ResponseWrapper.wrap(user.as_json(only: [:id, :email, :nickname])), status: :ok
+      token = JsonWebToken.encode(user)
+      render json: ResponseWrapper.wrap(user.as_json(only: [:id, :email, :nickname]).merge(token: token)), status: :ok
     else
       render json: ResponseWrapper.wrap(nil, user.errors.details), status: :bad_request
     end
@@ -23,9 +23,9 @@ class Api::UsersController < Api::ApplicationController
       user_success_login = user.authenticate params[:password]
       if user_success_login.present?
         # 로그인 성공 했을 시
-        token = JsonWebToken.encode(user.id)
         #MyRedis.set("session:#{params[:email]}", Time.zone.now)
-        render json: ResponseWrapper.wrap(user.as_json.merge(token)), status: :ok
+        token = JsonWebToken.encode(user)
+        render json: ResponseWrapper.wrap(user.as_json.merge(token: token)), status: :ok
       else
         # 비밀번호가 일치하지 않았을 경우
         render json: ResponseWrapper.wrap(nil), status: :not_found

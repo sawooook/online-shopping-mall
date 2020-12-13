@@ -1,15 +1,15 @@
 class Api::UsersDescriptionController < Api::ApplicationController
+  before_action :authenticate_user , only: :create
   def new
   end
 
   def create
-    user = User.find_by_nickname(params[:nickname])
-    if user.present?
-      user_description = user.user_descriptions.new(user_description_params)
+    if @current_user
+      user_description = @current_user.user_descriptions.new(user_description_params)
       if user_description.save
-        render json: ResponseWrapper.wrap(user.as_json(include: :user_descriptions)), status: :ok
+        render json: ResponseWrapper.wrap(@current_user.as_json(include: :user_descriptions).merge(token: "123")), status: :ok
       else
-        render json: ResponseWrapper.wrap(nil, user.errors.details), status: :bad_request
+        render json: ResponseWrapper.wrap(nil, @current_user.errors.details), status: :bad_request
       end
     else
       render json: ResponseWrapper.wrap(nil,"no_user"), status: :not_found

@@ -37,7 +37,10 @@ class SignUp extends React.Component {
                 console.log(response.status)
                 if(response.status === 200) {
                     // 로그인 성공시
-                    window.location.href = "http://localhost:3000/web/mains"
+                    response.json().then(data => {
+                        localStorage.setItem("token", data.data.token)
+                        window.location.href = "http://localhost:3000/web/mains"
+                    })
                 }else{
                     //로그인 실패시
                     alert("로그인에 실패하였습니다")

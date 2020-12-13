@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
 import { Button, Form, Container } from 'react-bootstrap';
-
+import  { cookie } from 'react-cookie'
 
 const API = 'http://localhost:3000/api/users';
 
@@ -48,7 +48,8 @@ class SignUpExtra extends React.Component {
         fetch("http://localhost:3000/api/users_description", {
             method: "POST",
             headers: {
-                "Content-Type" : "application/json"
+                "Content-Type": "application/json",
+                "authorization": localStorage.getItem("token")
             },
             body: JSON.stringify(
                 {
@@ -62,6 +63,7 @@ class SignUpExtra extends React.Component {
                 console.log(response.status)
                 if(response.status === 200) {
                     // 회원 추가 정보 입력 성공시
+                    // cookie.setItem()
                     window.location.href = "http://localhost:3000"
                 } else {
                     //회원가입 실패시

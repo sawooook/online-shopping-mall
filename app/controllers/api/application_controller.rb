@@ -4,10 +4,13 @@ class Api::ApplicationController < ApplicationController
 
   def authenticate_user
     if http_token.present?
+      puts "============current_user1"
+
       # http_token이 존재하면 decode를 함
-      decode_token = JsonWebToken.decode(http_token)
-      if decode_token.present?
-        @token = decode_token
+      hash = JsonWebToken.decode http_token
+      if hash.present?
+        @current_user = User.find_by_id hash["user_id"]
+        puts @current_user
       end
       return
     else
@@ -30,8 +33,14 @@ class Api::ApplicationController < ApplicationController
 
   def http_token
     if request.headers['Authorization'].present?
-      request.headers['Authorization'].split(' ').last
+      token = request.headers['Authorization'].split(' ').last
+      puts request.headers['Authorization']
+      puts request.headers['Authorization'].split(' ').last
+      puts "=========================1 http_token"
+      token
     else
+      puts "=========================2 http_token"
+
       nil
     end
   end
