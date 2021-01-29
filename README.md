@@ -1,26 +1,6 @@
 [![Build Status](https://travis-ci.com/sawooook/online-shopping-mall.svg?branch=main)](https://travis-ci.com/sawooook/online-shopping-mall)
 
-# README
+# 온라인 쇼핑몰
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+토이프로젝트로 React.js 와 Rails를 이용하여 온라인쇼핑몰을 제작중에 있습니다.
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
